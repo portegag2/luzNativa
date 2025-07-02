@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUZ NATIVA - App Cashless</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a1a0a 0%, #1a2f1a 50%, #0f2415 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .screens-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .phone-screen {
+            width: 350px;
+            height: 700px;
+            background: linear-gradient(180deg, #1a2f1a 0%, #0f2415 100%);
+            border-radius: 30px;
+            border: 4px solid #00ff88;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 136, 0.3),
+                inset 0 0 30px rgba(0, 255, 136, 0.1);
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .screen-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00ff88;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* SPLASH SCREEN */
+        .splash-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+            position: relative;
+        }
+
+        .splash-logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .splash-logo .luz {
+            font-size: 48px;
+            font-weight: 900;
+            color: #00ff88;
+            text-shadow: 0 0 20px #00ff88;
+            letter-spacing: 4px;
+            animation: glow-pulse 2s ease-in-out infinite;
+        }
+
+        .splash-logo .nativa {
+            font-size: 20px;
+            color: #66ff99;
+            letter-spacing: 6px;
+            margin-top: -5px;
+            opacity: 0.9;
+        }
+
+        .splash-tagline {
+            color: #44aa66;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 60px;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(0, 255, 136, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #66ff99);
+            border-radius: 2px;
+            animation: loading 3s ease-in-out infinite;
+        }
+
+        /* DASHBOARD SCREEN */
+        .dashboard-screen {
+            padding: 40px 25px 25px;
+            background: linear-gradient(180deg, #1a2f1a 0%, #0f2415 100%);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-mini {
+            font-size: 24px;
+            font-weight: 900;
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00ff88, #66ff99);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #0a1a0a;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        .balance-label {
+            color: #66ff99;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .balance-amount {
+            font-size: 48px;
+            font-weight: 900;
+            color: #00ff88;
+            text-shadow: 0 0 20px #00ff88;
+            position: relative;
+            z-index: 1;
+        }
+
+        .currency {
+            font-size: 24px;
+            color: #44aa66;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: #00ff88;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn:hover {
+            background: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .action-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .recent-activity {
+            color: #66ff99;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .activity-info h4 {
+            color: #ffffff;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .activity-info p {
+            color: #66ff99;
+            font-size: 12px;
+        }
+
+        .activity-amount {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        /* QR PAY SCREEN */
+        .qr-screen {
+            padding: 40px 25px 25px;
+            text-align: center;
+        }
+
+        .qr-container {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #000000 25%, transparent 25%), 
+                        linear-gradient(-45deg, #000000 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #000000 75%), 
+                        linear-gradient(-45deg, transparent 75%, #000000 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            margin: 0 auto;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .qr-info {
+            margin-top: 20px;
+            color: #66ff99;
+        }
+
+        .payment-amount {
+            font-size: 32px;
+            color: #00ff88;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .payment-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #00ff88, #66ff99);
+            color: #0a1a0a;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00ff88;
+            border: 2px solid #00ff88;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        /* ANIMATIONS */
+        @keyframes glow-pulse {
+            0%, 100% { text-shadow: 0 0 20px #00ff88; }
+            50% { text-shadow: 0 0 30px #00ff88, 0 0 40px #00ff88; }
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* BOTTOM NAVIGATION */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #66ff99;
+            font-size: 12px;
+        }
+
+        .nav-item.active {
+            color: #00ff88;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .screens-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .phone-screen {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="screens-container">
+        <!-- SPLASH SCREEN -->
+        <div>
+            <h3 class="screen-header">SPLASH SCREEN</h3>
+            <div class="phone-screen">
+                <div class="splash-screen">
+                    <div class="splash-logo">
+                        <div class="luz">LUZ</div>
+                        <div class="nativa">NATIVA</div>
+                    </div>
+                    <div class="splash-tagline">Electronic Music • Nature • Experience</div>
+                    <div class="loading-bar">
+                        <div class="loading-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD SCREEN -->
+        <div>
+            <h3 class="screen-header">DASHBOARD PRINCIPAL</h3>
+            <div class="phone-screen">
+                <div class="dashboard-screen">
+                    <div class="header">
+                        <div class="logo-mini">LUZ</div>
+                        <div class="user-avatar">M</div>
+                    </div>
+
+                    <div class="balance-card">
+                        <div class="balance-label">Tu saldo disponible</div>
+                        <div class="balance-amount">€45<span class="currency">.00</span></div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <a href="#" class="action-btn">
+                            <span class="action-icon">💳</span>
+                            <div>Recargar</div>
+                        </a>
+                        <a href="#" class="action-btn">
+                            <span class="action-icon">📱</span>
+                            <div>Pagar</div>
+                        </a>
+                        <a href="#" class="action-btn">
+                            <span class="action-icon">🗺️</span>
+                            <div>Mapa</div>
+                        </a>
+                        <a href="#" class="action-btn">
+                            <span class="action-icon">🎵</span>
+                            <div>Programa</div>
+                        </a>
+                    </div>
+
+                    <div class="recent-activity">Actividad reciente</div>
+                    <div class="activity-item">
+                        <div class="activity-info">
+                            <h4>Eco Bar - Main Stage</h4>
+                            <p>Hace 23 min</p>
+                        </div>
+                        <div class="activity-amount">-€8.50</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-info">
+                            <h4>Green Food Truck</h4>
+                            <p>Hace 1h 15min</p>
+                        </div>
+                        <div class="activity-amount">-€12.00</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-info">
+                            <h4>Recarga en taquilla</h4>
+                            <p>Ayer 18:30</p>
+                        </div>
+                        <div class="activity-amount">+€50.00</div>
+                    </div>
+                </div>
+
+                <div class="bottom-nav">
+                    <div class="nav-item active">
+                        <span class="nav-icon">🏠</span>
+                        <div>Inicio</div>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-icon">📱</span>
+                        <div>Pagar</div>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <div>Historial</div>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-icon">🎪</span>
+                        <div>Festival</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR PAY SCREEN -->
+        <div>
+            <h3 class="screen-header">PANTALLA DE PAGO QR</h3>
+            <div class="phone-screen">
+                <div class="qr-screen">
+                    <div class="header">
+                        <div class="logo-mini">LUZ</div>
+                        <div class="user-avatar">M</div>
+                    </div>
+
+                    <h2 style="color: #00ff88; margin-bottom: 10px;">Escanea para pagar</h2>
+                    <p style="color: #66ff99; font-size: 14px;">Muestra este código al vendedor</p>
+
+                    <div class="qr-container">
+                        <div class="qr-code">
+                            QR CODE<br>
+                            LUZ NATIVA<br>
+                            ID: #7821
+                        </div>
+                    </div>
+
+                    <div class="payment-amount">€0.00</div>
+                    <p class="qr-info">Importe se calculará al escanear</p>
+
+                    <div class="payment-buttons">
+                        <button class="btn btn-secondary">Cancelar</button>
+                        <button class="btn btn-primary">Mi saldo: €45.00</button>
+                    </div>
+                </div>
+
+                <div class="bottom-nav">
+                    <div class="nav-item">
+                        <span class="nav-icon">🏠</span>
+                        <div>Inicio</div>
+                    </div>
+                    <div class="nav-item active">
+                        <span class="nav-icon">📱</span>
+                        <div>Pagar</div>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <div>Historial</div>
+                    </div>
+                    <div class="nav-item">
+                        <span class="nav-icon">🎪</span>
+                        <div>Festival</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

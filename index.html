@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo LUZ NATIVA</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #0a1a0a 0%, #1a2f1a 50%, #0f2415 100%);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-logo {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .luz-text {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: #00ff88;
+            text-shadow: 
+                0 0 20px #00ff88,
+                0 0 40px #00ff88,
+                0 0 60px #00ff88;
+            animation: pulse-glow 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nativa-text {
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 12px;
+            color: #66ff99;
+            text-transform: uppercase;
+            margin-top: -10px;
+            opacity: 0.9;
+            animation: subtle-glow 4s ease-in-out infinite;
+        }
+
+        .organic-shape {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 300px;
+            background: radial-gradient(ellipse at center, 
+                rgba(0, 255, 136, 0.1) 0%,
+                rgba(0, 255, 136, 0.05) 40%,
+                transparent 70%);
+            border-radius: 50% 30% 60% 40%;
+            animation: morph 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .sound-waves {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .wave {
+            position: absolute;
+            border: 2px solid rgba(0, 255, 136, 0.2);
+            border-radius: 50%;
+            animation: expand-wave 4s linear infinite;
+        }
+
+        .wave:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: calc(50% - 100px);
+            left: calc(50% - 100px);
+            animation-delay: 0s;
+        }
+
+        .wave:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            top: calc(50% - 150px);
+            left: calc(50% - 150px);
+            animation-delay: 1s;
+        }
+
+        .wave:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            top: calc(50% - 200px);
+            left: calc(50% - 200px);
+            animation-delay: 2s;
+        }
+
+        .leaves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            background: linear-gradient(45deg, #00ff88, #66ff99);
+            border-radius: 0 100% 0 100%;
+            animation: float-leaf 6s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        .leaf:nth-child(1) {
+            top: 20%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .leaf:nth-child(2) {
+            top: 60%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        .leaf:nth-child(3) {
+            bottom: 30%;
+            left: 25%;
+            animation-delay: 4s;
+        }
+
+        .leaf:nth-child(4) {
+            top: 40%;
+            right: 15%;
+            animation-delay: 1s;
+        }
+
+        .tagline {
+            color: #44aa66;
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 300;
+            opacity: 0.8;
+            animation: fade-in-out 5s ease-in-out infinite;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: particle-dance 8s linear infinite;
+        }
+
+        .particle:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            top: 20%;
+            right: 30%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            bottom: 15%;
+            left: 40%;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(4) {
+            top: 70%;
+            right: 10%;
+            animation-delay: 6s;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                text-shadow: 
+                    0 0 20px #00ff88,
+                    0 0 40px #00ff88,
+                    0 0 60px #00ff88;
+            }
+            50% {
+                text-shadow: 
+                    0 0 30px #00ff88,
+                    0 0 60px #00ff88,
+                    0 0 90px #00ff88,
+                    0 0 120px #00ff88;
+            }
+        }
+
+        @keyframes subtle-glow {
+            0%, 100% {
+                opacity: 0.9;
+            }
+            50% {
+                opacity: 1;
+                text-shadow: 0 0 15px #66ff99;
+            }
+        }
+
+        @keyframes morph {
+            0%, 100% {
+                border-radius: 50% 30% 60% 40%;
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            25% {
+                border-radius: 40% 60% 30% 70%;
+                transform: translate(-50%, -50%) rotate(90deg);
+            }
+            50% {
+                border-radius: 60% 40% 50% 30%;
+                transform: translate(-50%, -50%) rotate(180deg);
+            }
+            75% {
+                border-radius: 30% 50% 40% 60%;
+                transform: translate(-50%, -50%) rotate(270deg);
+            }
+        }
+
+        @keyframes expand-wave {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes float-leaf {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-10px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(5px) rotate(240deg);
+            }
+        }
+
+        @keyframes fade-in-out {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes particle-dance {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translateX(20px) translateY(-15px);
+                opacity: 1;
+            }
+            50% {
+                transform: translateX(-10px) translateY(-30px);
+                opacity: 0.7;
+            }
+            75% {
+                transform: translateX(-20px) translateY(10px);
+                opacity: 0.9;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-container {
+                width: 90vw;
+                height: 300px;
+            }
+            
+            .luz-text {
+                font-size: 48px;
+                letter-spacing: 4px;
+            }
+            
+            .nativa-text {
+                font-size: 24px;
+                letter-spacing: 8px;
+            }
+            
+            .organic-shape {
+                width: 300px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <div class="sound-waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        
+        <div class="organic-shape"></div>
+        
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <div class="leaves">
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+        </div>
+        
+        <div class="main-logo">
+            <div class="luz-text">LUZ</div>
+            <div class="nativa-text">NATIVA</div>
+        </div>
+        
+        <div class="tagline">Electronic Music • Nature • Experience</div>
+    </div>
+</body>
+</html>
